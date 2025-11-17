@@ -1,0 +1,42 @@
+# === Python ===
+__pycache__/
+
+
+# === Environnements ===
+venv/
+.env
+.env.*
+*.env
+
+# === Données / datasets ===
+data/
+!data/README.md
+
+# === Poids de modèles ===
+*.pth
+*.pt
+experiments/*/best_model.pth
+
+
+# === Expériences & logs ===
+experiments/*/logs.csv
+experiments/*/events*
+experiments/*/example_preds/
+experiments/*/*.png
+experiments/*/*.txt
+
+# === Images ===
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.tiff
+*.gif
+
+# === Notebooks ===
+.ipynb_checkpoints/
+
+
+# === IDE & Editor ===
+.vscode/
+

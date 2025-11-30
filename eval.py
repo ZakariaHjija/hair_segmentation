@@ -1,7 +1,7 @@
 import os
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, ConcatDataset
 import matplotlib.pyplot as plt
 
 from models import ResUnet , Unet , PSPNet
@@ -9,6 +9,7 @@ from datasets.figaro import FigaroDataset
 from utils.metrics import dice_score, iou_score
 from utils.visualization import save_prediction
 from utils.transforms import img_transforms , mask_transforms
+from datasets.celeb import celeb_Dataset
 
 
 def load_model(model_name, checkpoint_path, device):
@@ -50,10 +51,15 @@ def evaluate(model, dataloader, criterion, device):
 
 def save_examples(model, dataloader, save_dir, device, max_samples=5):
     os.makedirs(save_dir, exist_ok=True)
+    shuffled_loader = DataLoader(
+        dataloader.dataset, 
+        batch_size=dataloader.batch_size, 
+        shuffle=True 
+    )
     count = 0
 
     with torch.no_grad():
-        for imgs, masks in dataloader:
+        for imgs, masks in shuffled_loader:
             imgs = imgs.to(device)
             masks = masks.to(device)
 
@@ -75,14 +81,24 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Running on:", device)
 
-    test_dataset = FigaroDataset(
-        root_dir="./data/raw/Figaro-1k",
+    figaro_test = FigaroDataset(
+        root_dir="./data/raw",
         split="Testing",
         transform=img_transforms,
         target_transform=mask_transforms
     )
 
-    test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
+    celeb_test = celeb_Dataset(
+        root_dir="./data/raw",
+        split="testing",  
+        transform=img_transforms,
+        target_transform=mask_transforms
+    )
+
+    combined_test_dataset = ConcatDataset([figaro_test, celeb_test])
+
+
+    test_loader = DataLoader(combined_test_dataset, batch_size=1, shuffle=False)
 
     model = load_model(model_name, checkpoint, device)
     criterion = nn.BCELoss()

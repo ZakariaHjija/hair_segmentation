@@ -13,4 +13,5 @@ def dice_score(preds, targets, epsilon=1e-6):
 def iou_score(pred, target, smooth=1e-6):
     intersection = (pred * target).sum()
     union = pred.sum() + target.sum() - intersection
-    return (intersection + smooth) / (union + smooth)
+    iou = (intersection + smooth) / (union + smooth)
+    return iou.item()

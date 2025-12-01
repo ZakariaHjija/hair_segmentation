@@ -49,7 +49,7 @@ def evaluate(model, dataloader, criterion, device):
     return total_loss / n, total_dice / n, total_iou / n
 
 
-def save_examples(model, dataloader, save_dir, device, max_samples=5):
+def save_examples(model, dataloader, save_dir, device, max_samples=10):
     os.makedirs(save_dir, exist_ok=True)
     shuffled_loader = DataLoader(
         dataloader.dataset, 
@@ -76,7 +76,7 @@ def save_examples(model, dataloader, save_dir, device, max_samples=5):
 def main():
     model_name = "ResUnet"  # change to "Unet" or "PSPNet"
     exp_dir = f"experiments/{model_name}"
-    checkpoint = f"{exp_dir}/{model_name}_best_model.pth"
+    checkpoint = f"{exp_dir}/{model_name}_fig+celebA+aug.pth"
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Running on:", device)
@@ -89,37 +89,53 @@ def main():
     )
 
     celeb_test = celeb_Dataset(
-        root_dir="./data/raw",
-        split="testing",  
+        root_dir="./data/processed",
+        split="test",  
         transform=img_transforms,
         target_transform=mask_transforms
     )
 
     combined_test_dataset = ConcatDataset([figaro_test, celeb_test])
 
+    figaro_test_loader = DataLoader(figaro_test, batch_size=1, shuffle=False)
 
-    test_loader = DataLoader(combined_test_dataset, batch_size=1, shuffle=False)
+    test_loader_fig_clbA = DataLoader(combined_test_dataset, batch_size=1, shuffle=False)
 
     model = load_model(model_name, checkpoint, device)
     criterion = nn.BCELoss()
 
-    test_loss, test_dice, test_iou = evaluate(model, test_loader, criterion, device)
-
-    print("===== Evaluation Results =====")
+    test_loss, test_dice, test_iou = evaluate(model, figaro_test_loader, criterion, device)
+    """
+    print("===== Evaluation Results figaro_test =====")
     print(f"Test Loss: {test_loss:.4f}")
     print(f"Test Dice: {test_dice:.4f}")
     print(f"Test IoU : {test_iou:.4f}")
 
-    with open(f"{exp_dir}/eval_report.txt", "w") as f:
+    with open(f"{exp_dir}/eval_report_figaro3.txt", "w") as f:
         f.write("Evaluation Report\n")
         f.write(f"Model: {model_name}\n")
         f.write(f"Test Loss: {test_loss:.4f}\n")
         f.write(f"Test Dice: {test_dice:.4f}\n")
         f.write(f"Test IoU : {test_iou:.4f}\n")
 
-    save_examples(model, test_loader, f"{exp_dir}/example_preds", device)
+
+    test_loss, test_dice, test_iou = evaluate(model, test_loader_fig_clbA, criterion, device)
+    print("===== Evaluation Results figaro+celebA =====")
+    print(f"Test Loss: {test_loss:.4f}")
+    print(f"Test Dice: {test_dice:.4f}")
+    print(f"Test IoU : {test_iou:.4f}")
+    with open(f"{exp_dir}/eval_report_figaro+celebA3.txt", "w") as f:
+        f.write("Evaluation Report\n")
+        f.write(f"Model: {model_name}\n")
+        f.write(f"Test Loss: {test_loss:.4f}\n")
+        f.write(f"Test Dice: {test_dice:.4f}\n")
+        f.write(f"Test IoU : {test_iou:.4f}\n")
+    """
+
+    save_examples(model, test_loader_fig_clbA, f"{exp_dir}/example_preds", device)
     print("Saved example predictions.")
 
 
 if __name__ == "__main__":
     main()
+

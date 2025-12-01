@@ -3,17 +3,17 @@ from PIL import Image
 from torch.utils.data import Dataset
 
 
-class FigaroDataset(Dataset):
-    def __init__(self, root_dir, split="training", transform=None, target_transform=None,augment_fn=None):
-        self.img_dir = os.path.join(root_dir,"Figaro-1k","Original", split)
-        self.mask_dir = os.path.join(root_dir,"Figaro-1k", "GT", split)
+class ProcessedDataset(Dataset):
+    def __init__(self, root_dir, split, transform=None, target_transform=None):
+        self.img_dir = os.path.join(root_dir, split, "img")
+        self.mask_dir = os.path.join(root_dir, split ,"masks")
 
         self.image_names = sorted(os.listdir(self.img_dir))
         self.mask_names = sorted(os.listdir(self.mask_dir))
 
         self.transform = transform
         self.target_transform = target_transform
-        self.augment_fn = augment_fn
+
     def __len__(self):
         return len(self.image_names)
 
@@ -30,7 +30,3 @@ class FigaroDataset(Dataset):
             mask = self.target_transform(mask)
 
         return image, mask
-
-
-
-

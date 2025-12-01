@@ -4,9 +4,9 @@ from torch.utils.data import Dataset
 
 
 class celeb_Dataset(Dataset):
-    def __init__(self, root_dir, split="training", transform=None, target_transform=None,augment_fn=None):
-        self.img_dir = os.path.join(root_dir, "CelebA_lite", split,"img")
-        self.mask_dir = os.path.join(root_dir, "CelebA_lite", split,"masks")
+    def __init__(self, root_dir, split, transform=None, target_transform=None,augment_fn=None):
+        self.img_dir = os.path.join(root_dir, split, "img")
+        self.mask_dir = os.path.join(root_dir, split ,"masks")
 
         self.image_names = sorted(os.listdir(self.img_dir))
         self.mask_names = sorted(os.listdir(self.mask_dir))
@@ -14,6 +14,7 @@ class celeb_Dataset(Dataset):
         self.transform = transform
         self.target_transform = target_transform
         self.augment_fn = augment_fn
+
     def __len__(self):
         return len(self.image_names)
 

@@ -1,0 +1,5 @@
+Evaluation Report
+Model: ResUnet
+Test Loss: 0.3770
+Test Dice: 0.7885
+Test IoU : 0.6679

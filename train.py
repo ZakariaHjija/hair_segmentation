@@ -72,36 +72,44 @@ def get_model(model_name, in_channels=3, n_classes=1):
 
 def main():
 
-    DATASET_PATH ="./data/raw"
-    augment_fn = simple_augment #None , simple_augment
+    DATASET_PATH_fig ="./data/raw"  # Path to Figaro1k dataset
+    DATASET_PATH_celebA = "./data/processed"  # Path to CelebA_lite dataset
+    augment_fn = None #simple_augment , simple_augment
     figaro_train_dataset = FigaroDataset(
-        root_dir=DATASET_PATH,
+        root_dir=DATASET_PATH_fig,
         split="Training",
         transform=img_transforms,
         target_transform=mask_transforms,
         augment_fn=augment_fn
     )
-    celeb_train_dataset = celeb_Dataset(
-        root_dir=DATASET_PATH,
-        split="Training",
-        transform=img_transforms,
-        target_transform=mask_transforms,
-        augment_fn=augment_fn
-    )
+    
     figaro_val_dataset = FigaroDataset(
-        root_dir=DATASET_PATH,
+        root_dir=DATASET_PATH_fig,
         split="Testing",
         transform=img_transforms,
         target_transform=mask_transforms
     )
+
+    celeb_train_dataset = celeb_Dataset(
+        root_dir=DATASET_PATH_celebA,
+        split="train",
+        transform=img_transforms,
+        target_transform=mask_transforms,
+        augment_fn=augment_fn
+    )
+
     celeb_val_dataset = celeb_Dataset(
-        root_dir=DATASET_PATH,
+        root_dir=DATASET_PATH_celebA,
         split="val",
         transform=img_transforms,
-        target_transform=mask_transforms
+        target_transform=mask_transforms,
+        
     )
+
     train_dataset = ConcatDataset([figaro_train_dataset, celeb_train_dataset])#celeb_train_dataset, figaro_train_dataset
-    val_dataset = ConcatDataset([celeb_val_dataset, celeb_val_dataset]) #celeb_val_dataset, v
+    val_dataset = ConcatDataset([figaro_val_dataset,celeb_val_dataset]) #celeb_val_dataset, v
+    
+    
 
     model_name ="resunet" #"unet"   # ou "resunet" # "pspnet"
     exp_dir = f"experiments/{model_name}"
@@ -110,13 +118,29 @@ def main():
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Device:", device)
+    print
 
-    batch_size = 32
+    batch_size = 16
     lr = 1e-3
-    num_epochs = 50
+    num_epochs = 80
 
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+    train_loader = DataLoader(
+    train_dataset,
+    batch_size=batch_size,
+    shuffle=True,
+    num_workers=4,      # essaie 4 ou 8
+    pin_memory=True,    # optimise transfert CPU -> GPU
+    persistent_workers=True
+)
+
+    val_loader = DataLoader(
+    val_dataset,
+    batch_size=batch_size,
+    shuffle=False,
+    num_workers=4,
+    pin_memory=True,
+    persistent_workers=True
+)
 
     model = get_model(model_name).to(device)
     criterion = nn.BCELoss()
@@ -124,6 +148,7 @@ def main():
 
 
     best_dice = 0.0
+    best_iou = 0.0
     train_losses = []
     val_losses = []
     train_dices = []
@@ -144,7 +169,7 @@ def main():
         print(f"  Train Loss: {train_loss:.4f} | Train Dice: {train_dice:.4f} | Train IoU: {train_iou:.4f}")
         print(f"  Val   Loss: {val_loss:.4f} | Val   Dice: {val_dice:.4f} | Val   IoU: {val_iou:.4f}")
 
-        if val_dice > best_dice and val_iou > best_iou:
+        if  val_iou > best_iou or val_dice > best_dice:
             best_dice = val_dice
             best_iou = val_iou
             torch.save(model.state_dict(), f"{exp_dir}/{model_name}_best_model.pth")
@@ -182,5 +207,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

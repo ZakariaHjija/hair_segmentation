@@ -47,6 +47,8 @@ After 50 epochs, the model achieved the following results on the 210-image Figar
  * We're also considering using descriptors featured engineered from dataset as input to our models ( HOG , LBP ) to see if that improves the models performance
 
  * Try other models .
+
+ * 01/12/2025  , learning rate scheduling , num of epochs different for non augmented ( 50 ) and augmented ( 100 ) , make visualizations that 
 ## Data augmentation
 
 <img width="1539" height="800" alt="dataset_sample_augmented" src="https://github.com/user-attachments/assets/ba03e700-868b-449b-96d7-9adffaad5c9d" />
@@ -55,13 +57,15 @@ After 50 epochs, the model achieved the following results on the 210-image Figar
 
 ## Perforrmance of Res-Unet
 # Hyperparameters 
-   lr = 0.001  and optimizer: Adam and num_epochs = 50
+   lr = 0.001  and optimizer: Adam and num_epochs = 50 and num_epochs_augmented = 80
  
  Model Res-Unet                        | tested on Figaro-1k           | tested on Figaro-1k+celebA |
 | :-----------------                   |  :-----------------           |  :-----------------        |
 | Trained on Figaro-1k                 | 0.8440 (IoU), 0.9245 (Dice)   | 0.6948 (ioU) 0.8103 (Dice) |
 | Trained on augmented figaro-1k       | 0.84  (IoU), 0.92 ( Dice )    | 0.6679(IoU)  0.7885 (Dice) |
+| Trained on figaro-1k+celebA          |  (IoU),  (Dice)               |  (IoU) , (Dice)            |
 | Trained on augmented figaro-1k+celebA| 0.8597 (IoU), 0.9348 ( Dice ) | 0.8211 (IoU)  0.9118 (Dice)|
+
 
 
 

@@ -52,12 +52,17 @@ After 50 epochs, the model achieved the following results on the 210-image Figar
 <img width="1539" height="800" alt="dataset_sample_augmented" src="https://github.com/user-attachments/assets/ba03e700-868b-449b-96d7-9adffaad5c9d" />
 
 
+
 ## Perforrmance of Res-Unet
+# Hyperparameters 
+   lr = 0.001  and optimizer: Adam and num_epochs = 50
+ 
  Model Res-Unet                        | tested on Figaro-1k           | tested on Figaro-1k+celebA |
 | :-----------------                   |  :-----------------           |  :-----------------        |
-| Trained on Figaro-1k                 | 0.86 (IoU), 0.94 (Dice)       | 0.7019 (ioU) 0.8170 (Dice) |
+| Trained on Figaro-1k                 | 0.8440 (IoU), 0.9245 (Dice)   | 0.6948 (ioU) 0.8103 (Dice) |
 | Trained on augmented figaro-1k       | 0.84  (IoU), 0.92 ( Dice )    | 0.6679(IoU)  0.7885 (Dice) |
-| Trained on augmented figaro-1k+celebA| 0.8597 (IoU), 0.9348          | 0.8211 (IoU)  0.9118 (Dice)|
+| Trained on augmented figaro-1k+celebA| 0.8597 (IoU), 0.9348 ( Dice ) | 0.8211 (IoU)  0.9118 (Dice)|
+
 
 
 

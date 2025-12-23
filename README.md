@@ -63,8 +63,9 @@ After 50 epochs, the model achieved the following results on the 210-image Figar
 | :-----------------                   |  :-----------------           |  :-----------------        |
 | Trained on Figaro-1k                 | 0.8440 (IoU), 0.9245 (Dice)   | 0.6948 (ioU) 0.8103 (Dice) |
 | Trained on augmented figaro-1k       | 0.84  (IoU), 0.92 ( Dice )    | 0.6679(IoU)  0.7885 (Dice) |
-| Trained on figaro-1k+celebA          |  (IoU),  (Dice)               |  (IoU) , (Dice)            |
-| Trained on augmented figaro-1k+celebA| 0.8597 (IoU), 0.9348 ( Dice ) | 0.8211 (IoU)  0.9118 (Dice)|
+| Trained on figaro-1k+celebA          | 0.8709  (IoU),  0.9371(Dice)  | 0.8330 (IoU) , 0.9066(Dice)|
+| Trained on augmented figaro-1k+celebA| 0.8743 (IoU),  0.9431 ( Dice )| 0.8379 (IoU)  0.9216 (Dice)|
+
 
 
 

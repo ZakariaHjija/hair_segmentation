@@ -62,9 +62,10 @@ After 50 epochs, the model achieved the following results on the 210-image Figar
  Model Res-Unet                        | tested on Figaro-1k           | tested on Figaro-1k+celebA |
 | :-----------------                   |  :-----------------           |  :-----------------        |
 | Trained on Figaro-1k                 | 0.8440 (IoU), 0.9245 (Dice)   | 0.6948 (ioU) 0.8103 (Dice) |
-| Trained on augmented figaro-1k       | 0.84  (IoU), 0.92 ( Dice )    | 0.6679(IoU)  0.7885 (Dice) |
+| Trained on augmented figaro-1k       |0.8625  (IoU), 0.9377 ( Dice ) |0.7019 (IoU)  0.8170 (Dice) |
 | Trained on figaro-1k+celebA          | 0.8709  (IoU),  0.9371(Dice)  | 0.8330 (IoU) , 0.9066(Dice)|
 | Trained on augmented figaro-1k+celebA| 0.8743 (IoU),  0.9431 ( Dice )| 0.8379 (IoU)  0.9216 (Dice)|
+
 
 
 

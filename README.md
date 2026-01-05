@@ -73,8 +73,9 @@ After 50 epochs, the model achieved the following results on the 210-image Figar
 | Trained on augmented figaro-1k+celebA| 0.8565(IoU), 0.9360 ( Dice )  | 0.7830 (IoU) ,0.8986 (Dice)|
 
 
-<img width="1539" height="800" ![alt text]("C:\Users\anasb\projects\hair_segmentation\test_output\grid_best_worst_old.png")
+<img width="1539" height="800" ![hair segmenattaion outlier test outputs](experiments/resunet/grid_best_worst.png)
  src="https://github.com/user-attachments/assets/ba03e700-868b-449b-96d7-9adffaad5c9d" />
+
 
 
 

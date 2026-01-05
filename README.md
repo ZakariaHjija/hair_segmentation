@@ -74,11 +74,6 @@ After 50 epochs, the model achieved the following results on the 210-image Figar
 
 
 
-Model MobileNet                          | tested on Figaro-1k           | tested on Figaro-1k+celebA |
-| :-----------------                   |  :-----------------           |  :-----------------        |
-| Trained on augmented figaro-1k       |0.8590  (IoU), 0.9374 ( Dice ) |0.7248 (IoU)  0.8460 (Dice) |
-| Trained on augmented figaro-1k+celebA| 0.8565(IoU), 0.9360 ( Dice )  | 0.7830 (IoU) ,0.8986 (Dice)|
-
 
 
 

@@ -72,9 +72,13 @@ After 50 epochs, the model achieved the following results on the 210-image Figar
 | Trained on augmented figaro-1k       |0.8590  (IoU), 0.9374 ( Dice ) |0.7248 (IoU)  0.8460 (Dice) |
 | Trained on augmented figaro-1k+celebA| 0.8565(IoU), 0.9360 ( Dice )  | 0.7830 (IoU) ,0.8986 (Dice)|
 
+ Model MobileNet                          | tested on Figaro-1k           | tested on Figaro-1k+celebA |
+| :-----------------                   |  :-----------------           |  :-----------------        |
+| Trained on augmented figaro-1k+celebA| 0.9125  (IoU),0.9602 ( Dice )  | 0.8638 (IoU) ,0.9307 (Dice)|
 
 <img width="1539" height="800" ![hair segmenattaion outlier test outputs](experiments/resunet/grid_best_worst.png)
  src="https://github.com/user-attachments/assets/ba03e700-868b-449b-96d7-9adffaad5c9d" />
+
 
 
 
